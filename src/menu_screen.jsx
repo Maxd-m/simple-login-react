@@ -1,0 +1,9 @@
+function MenuScreen() {
+  return (
+    <>
+      <h1>Menu</h1>
+    </>
+  );
+}
+
+export default MenuScreen;
