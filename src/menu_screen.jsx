@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./modal.jsx";
 
-function MenuScreen({ users, currentUser, editUser }) {
+function MenuScreen({ users, currentUser, editUser, deleteUser }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [editFields, setEditFields] = useState({ username: "", password: "" });
@@ -42,7 +42,29 @@ function MenuScreen({ users, currentUser, editUser }) {
             <tr key={i}>
               <td>{u.username}</td>
               <td>
-                <button className="counter">Eliminar</button>
+                <button
+                  className="counter"
+                  onClick={() => deleteUser(u.username)}
+                  // Opcional pero recomendado: Evita que el usuario en sesión se borre a sí mismo
+                  disabled={
+                    u.username === currentUser?.username ||
+                    u.username === "admin"
+                  }
+                  style={{
+                    opacity:
+                      u.username === currentUser?.username ||
+                      u.username === "admin"
+                        ? 0.5
+                        : 1,
+                    cursor:
+                      u.username === currentUser?.username ||
+                      u.username === "admin"
+                        ? "not-allowed"
+                        : "pointer",
+                  }}
+                >
+                  Eliminar
+                </button>
               </td>
             </tr>
           ))}

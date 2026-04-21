@@ -16,7 +16,6 @@ function App() {
   // Aquí vive nuestra "base de datos" temporal
   const [users, setUsers] = useState([
     { username: "admin", password: "1234" }, // Usuario por defecto
-    { username: "max", password: "abcd" },
   ]);
 
   // Función para agregar un usuario nuevo
@@ -32,6 +31,10 @@ function App() {
     if (currentUser.username === oldUsername) {
       setCurrentUser(updatedUser);
     }
+  };
+  const deleteUser = (usernameToDelete) => {
+    // .filter conservará todos los usuarios cuyo nombre sea DISTINTO al que queremos borrar
+    setUsers(users.filter((u) => u.username !== usernameToDelete));
   };
 
   return (
@@ -58,6 +61,7 @@ function App() {
               users={users}
               currentUser={currentUser}
               editUser={editUser}
+              deleteUser={deleteUser}
             />
           }
         />
