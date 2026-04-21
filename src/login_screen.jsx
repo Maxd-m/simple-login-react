@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginScreen({ users, setCurrentUser }) {
-  // <-- Recibimos la prop
   const [fields, setFields] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
@@ -15,7 +14,7 @@ function LoginScreen({ users, setCurrentUser }) {
 
     if (userExists) {
       // 1. Guardamos al usuario en el estado global
-      setCurrentUser(userExists.username);
+      setCurrentUser({ username: fields.username, password: fields.password });
 
       // 2. Avisamos y navegamos
       alert(`Bienvenido ${userExists.username}`);

@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from "./modal.jsx";
 
 function MenuScreen({ users, currentUser }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <h1>Menu</h1>
@@ -26,8 +30,42 @@ function MenuScreen({ users, currentUser }) {
         </tbody>
       </table>
 
+      <div style={{ height: "4rem" }}></div>
+
       <h3>Mi usuario</h3>
-      <p>{currentUser}</p>
+      <div
+        style={{
+          display: "flex",
+          gap: "5rem",
+          justifyContent: "center",
+        }}
+      >
+        <p>{currentUser?.username}</p>
+        <p>{currentUser?.password}</p>
+      </div>
+      <button
+        className="counter"
+        onClick={() => setIsOpen(true)}
+        style={{
+          width: "10rem",
+          justifyContent: "center",
+          alignSelf: "center",
+          margin: "2rem",
+        }}
+      >
+        Editar
+      </button>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h2>Editar usuario</h2>
+        <form className="form-column">
+          <input type="text" placeholder="Username" />
+          <input type="password" placeholder="Password" />
+          <button type="submit" className="counter">
+            Guardar
+          </button>
+        </form>
+      </Modal>
     </>
   );
 }

@@ -16,6 +16,7 @@ function App() {
   // Aquí vive nuestra "base de datos" temporal
   const [users, setUsers] = useState([
     { username: "admin", password: "1234" }, // Usuario por defecto
+    { username: "max", password: "abcd" },
   ]);
 
   // Función para agregar un usuario nuevo
@@ -23,7 +24,7 @@ function App() {
     setUsers([...users, newUser]);
   };
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
 
   return (
     <BrowserRouter>
