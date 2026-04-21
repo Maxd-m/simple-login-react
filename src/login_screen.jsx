@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./App.css";
-function LoginScreen() {
+
+function LoginScreen({ users, setCurrentUser }) {
+  // <-- Recibimos la prop
   const [fields, setFields] = useState({ username: "", password: "" });
-  const navigate = useNavigate(); // Hook para navegar programáticamente
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Buscamos si existe un usuario que coincida con lo escrito
     const userExists = users.find(
       (u) => u.username === fields.username && u.password === fields.password,
     );
 
     if (userExists) {
+      // 1. Guardamos al usuario en el estado global
+      setCurrentUser(userExists.username);
+
+      // 2. Avisamos y navegamos
       alert(`Bienvenido ${userExists.username}`);
-      // navigate("/home");
+      navigate("/home");
     } else {
       alert("Usuario o contraseña incorrectos");
     }
@@ -38,6 +42,7 @@ function LoginScreen() {
             value={fields.password}
             onChange={(e) => setFields({ ...fields, password: e.target.value })}
           />
+          {/* El botón ya no necesita onClick, el form usa onSubmit */}
           <button type="submit" className="counter">
             Login
           </button>

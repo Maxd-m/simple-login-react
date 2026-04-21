@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./App.css";
-function RegisterScreen() {
+function RegisterScreen({ addUser }) {
   const [fields, setFields] = useState({ username: "", password: "" });
   const navigate = useNavigate(); // Hook para navegar programáticamente
 
   const handleRegister = (e) => {
     e.preventDefault();
 
-    if (form.username && form.password) {
+    if (fields.username && fields.password) {
       // Llamamos a la función que vive en App.jsx
-      addUser({ username: form.username, password: form.password });
+      addUser({ username: fields.username, password: fields.password });
 
       alert("¡Usuario registrado con éxito!");
       navigate("/"); // Redirigir al login

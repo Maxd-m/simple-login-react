@@ -15,18 +15,26 @@ import MenuScreen from "./menu_screen.jsx";
 function App() {
   // Aquí vive nuestra "base de datos" temporal
   const [users, setUsers] = useState([
-    { username: "admin", password: "1243" }, // Usuario por defecto
+    { username: "admin", password: "1234" }, // Usuario por defecto
   ]);
 
   // Función para agregar un usuario nuevo
   const addUser = (newUser) => {
     setUsers([...users, newUser]);
   };
+
+  const [currentUser, setCurrentUser] = useState(null);
+
   return (
     <BrowserRouter>
       <Routes>
         {/* Ruta principal: Login */}
-        <Route path="/" element={<LoginScreen users={users} />} />
+        <Route
+          path="/"
+          element={
+            <LoginScreen users={users} setCurrentUser={setCurrentUser} />
+          }
+        />
 
         {/* Ruta de registro */}
         <Route
@@ -34,7 +42,10 @@ function App() {
           element={<RegisterScreen addUser={addUser} />}
         />
         {/* Ruta al menu */}
-        <Route path="/home" element={<MenuScreen />} />
+        <Route
+          path="/home"
+          element={<MenuScreen users={users} currentUser={currentUser} />}
+        />
       </Routes>
     </BrowserRouter>
   );
