@@ -1,9 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./modal.jsx";
 
-function MenuScreen({ users, currentUser }) {
+function MenuScreen({ users, currentUser, editUser }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [editFields, setEditFields] = useState({ username: "", password: "" });
+
+  useEffect(() => {
+    if (isOpen && currentUser) {
+      setEditFields({
+        username: currentUser.username,
+        password: currentUser.password,
+      });
+    }
+  }, [isOpen, currentUser]);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    console.log(currentUser.username, editFields);
+    editUser(currentUser.username, editFields);
+    setIsOpen(false); // Cerramos el modal
+    alert("Usuario actualizado con éxito");
+  };
 
   return (
     <>
@@ -40,8 +59,8 @@ function MenuScreen({ users, currentUser }) {
           justifyContent: "center",
         }}
       >
-        <p>{currentUser?.username}</p>
-        <p>{currentUser?.password}</p>
+        <p>Usuario: {currentUser?.username}</p>
+        <p>Contraseña: {currentUser?.password}</p>
       </div>
       <button
         className="counter"
@@ -58,9 +77,23 @@ function MenuScreen({ users, currentUser }) {
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <h2>Editar usuario</h2>
-        <form className="form-column">
-          <input type="text" placeholder="Username" />
-          <input type="password" placeholder="Password" />
+        <form className="form-column" onSubmit={handleSave}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={editFields.username}
+            onChange={(e) =>
+              setEditFields({ ...editFields, username: e.target.value })
+            }
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={editFields.password}
+            onChange={(e) =>
+              setEditFields({ ...editFields, password: e.target.value })
+            }
+          />
           <button type="submit" className="counter">
             Guardar
           </button>

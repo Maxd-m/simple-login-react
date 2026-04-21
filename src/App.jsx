@@ -26,6 +26,14 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
 
+  const editUser = (oldUsername, updatedUser) => {
+    setUsers(users.map((u) => (u.username === oldUsername ? updatedUser : u)));
+
+    if (currentUser.username === oldUsername) {
+      setCurrentUser(updatedUser);
+    }
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -45,7 +53,13 @@ function App() {
         {/* Ruta al menu */}
         <Route
           path="/home"
-          element={<MenuScreen users={users} currentUser={currentUser} />}
+          element={
+            <MenuScreen
+              users={users}
+              currentUser={currentUser}
+              editUser={editUser}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>
